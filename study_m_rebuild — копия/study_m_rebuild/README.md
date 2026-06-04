@@ -46,9 +46,9 @@ docker compose up --build
 
 | Роль | Email |
 |---|---|
-| Администратор | admin@study.local |
-| Преподаватель | teacher@study.local |
-| Студент | student@study.local |
+| Администратор | admin@study.com |
+| Преподаватель | teacher@study.com |
+| Студент | student@study.com |
 
 ## Основные эндпоинты
 
