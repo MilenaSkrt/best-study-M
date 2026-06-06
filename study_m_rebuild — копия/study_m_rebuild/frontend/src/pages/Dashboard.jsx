@@ -10,10 +10,10 @@ export default function Dashboard() {
   const [completedTheory, setCompletedTheory] = useState([]);
 
   useEffect(() => {
-    setCompletedTheory(getTheoryProgress());
+    setCompletedTheory(getTheoryProgress(user));
 
     function handleStorageUpdate() {
-      setCompletedTheory(getTheoryProgress());
+      setCompletedTheory(getTheoryProgress(user));
     }
 
     window.addEventListener('storage', handleStorageUpdate);
@@ -23,7 +23,7 @@ export default function Dashboard() {
       window.removeEventListener('storage', handleStorageUpdate);
       window.removeEventListener('focus', handleStorageUpdate);
     };
-  }, []);
+  }, [user]);
 
   const theoryCount = theorySections.reduce((sum, section) => sum + section.topics.length, 0);
   const completedCount = completedTheory.length;
