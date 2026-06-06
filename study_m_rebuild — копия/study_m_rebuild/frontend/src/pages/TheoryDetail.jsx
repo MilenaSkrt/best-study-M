@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { theorySections } from '../data/theoryContent.js';
+import { useAuth } from '../auth/AuthContext.jsx';
 import { markTheoryCompleted } from '../utils/progress.js';
 
 function findTopic(sectionId) {
@@ -31,6 +32,7 @@ function normalizeQuiz(quiz = []) {
 
 export default function TheoryDetail() {
   const { sectionId } = useParams();
+  const { user } = useAuth();
   const result = findTopic(sectionId);
   const [answers, setAnswers] = useState({});
   const [checked, setChecked] = useState(false);
@@ -155,7 +157,7 @@ export default function TheoryDetail() {
                     setChecked(true);
 
                     if (correctCount >= 2) {
-                        markTheoryCompleted(topic.id);
+                        markTheoryCompleted(topic.id, user);
                     }
                 }}
                   disabled={Object.keys(answers).length < quiz.length}
