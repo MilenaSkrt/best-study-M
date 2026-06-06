@@ -1,22 +1,28 @@
-const PROGRESS_KEY = 'study_m_theory_progress';
+const PROGRESS_KEY_PREFIX = 'study_m_theory_progress';
 
-export function getTheoryProgress() {
-  const raw = localStorage.getItem(PROGRESS_KEY);
+function getProgressKey(user) {
+  const userKey = user?.id || user?.email;
+  return userKey ? `${PROGRESS_KEY_PREFIX}_${userKey}` : PROGRESS_KEY_PREFIX;
+}
+
+export function getTheoryProgress(user) {
+  const raw = localStorage.getItem(getProgressKey(user));
 
   if (!raw) return [];
 
   try {
-    return JSON.parse(raw);
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : [];
   } catch {
     return [];
   }
 }
 
-export function markTheoryCompleted(topicId) {
-  const progress = getTheoryProgress();
+export function markTheoryCompleted(topicId, user) {
+  const progress = getTheoryProgress(user);
 
   if (!progress.includes(topicId)) {
     progress.push(topicId);
-    localStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
+    localStorage.setItem(getProgressKey(user), JSON.stringify(progress));
   }
 }
